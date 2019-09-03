@@ -31,7 +31,39 @@ def format_sort_results(sorted_people):
 				formatted_people.append({"name": name, "age": age, "ssn": ssn})
 	return formatted_people
 
-def sort_people(raw_people):
+def sort_people_better(raw_people):
+
+	# create list of people indexed by name, then indexed by age (see format above)
+	unsorted_people = transform_to_sort_dimensions(raw_people)
+
+	people_sorted_by_name = quickSortList(unsorted_people)
+
+	# sorting by age within each name
+	for name, name_dimension in people_sorted_by_name:
+		people_sorted_by_name[name] = quickSortList(name_dimension)
+	
+	# returning the results to their original format
+	return format_sort_results(people_sorted_by_name)
+
+# stub, uses quick sort to order the list
+def quickSort(unsorted_list):
+	sorted_list = []
+	return sorted_list
+
+# stub, should transform the data into the sorting format above
+def transform_to_sort_dimensions(raw_people):
+	formatted = []
+	return formatted
+
+#desired shape of data
+# {name: {
+# 	age: [ ssn, ssn ],
+#   age: [ ssn, ssn]
+# }
+# }
+
+## TOO SLOW
+def sort_people_initial(raw_people):
 
 	sorted_people = {}
 	for person in raw_people:
