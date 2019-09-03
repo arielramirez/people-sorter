@@ -1,0 +1,12 @@
+[
+	{
+		"ssn": "123-45-6789",
+		"name": "Darth Vader",
+		"age": 45
+	 },
+	{
+		"ssn": "011-11-0010",
+		"name": "Luke Skywalker",
+		"age": "19"
+	 }
+ ]
