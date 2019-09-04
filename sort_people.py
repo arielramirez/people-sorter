@@ -9,6 +9,12 @@ import json
 import collections
 from classes.quick_sort import QuickSort
 
+#remaining:
+# add ability to specify test filename in command line
+# add execution instructions to readme
+# add more testing data
+# clean up code
+
 TEST_FILENAME = 'test_people.json'
 
 # standardizes the data in preparation for sorting
@@ -62,20 +68,16 @@ def sort_people(raw_people):
 
 	# create list of people indexed by name, then indexed by age (see function for format)
 	unsorted_people = transform_to_sort_dimensions(raw_people)
-	print(unsorted_people)
 
 	# sort by name, sorts asc by default
-	sorted_names_list = quickSortList(list(unsorted_people.keys()))
-
-	print(sorted_names_list)
-	
+	sorted_names_list = quickSortList(list(set(unsorted_people.keys())))
 
 	# ensure the final sort order is maintained
 	sorted_people = collections.OrderedDict()
 
 	for name in sorted_names_list:
 	    # get the sorted ages in desc order within a given name
-		sorted_ages_list = quickSortList(list(unsorted_people[name].keys()), lambda a,b: a > b)
+		sorted_ages_list = quickSortList(list(set(unsorted_people[name].keys())), lambda a,b: a > b)
 		sorted_people[name] = {}
 		for age in sorted_ages_list:
 			# storing everything in sorted order by name and age
@@ -83,64 +85,9 @@ def sort_people(raw_people):
 			# reversing original order of SSNs given
 			sorted_people[name][age].reverse()
 
-
 	# returning the results to their original format (totally optional)
-	print(sorted_people)
 	return format_sort_results(sorted_people)
 
 with open(TEST_FILENAME) as json_file:
 	people_json = json.load(json_file)
 	sort_people(people_json)
-
-
-
-## TOO SLOW
-# def sort_people_initial(raw_people):
-
-# 	sorted_people = {}
-# 	for person in raw_people:
-# 		# if the name already exists, insert it into that subset
-# 		if person['name'] in sorted_people:
-# 			# if the age already exists, append it to the end of the existing list to maintain order
-# 			if person['age'] in sorted_people[person['name']]:
-# 				# append to the end of the existing list to maintain original order
-# 				sorted_people[person['name']][person['age']].append(person['ssn'])
-# 			else:
-# 				#if the age doesn't exist yet, figure out where to put it
-# 				sorted_people['name'] = insertIntoSortedList(sorted_people[person['name']], person)
-# 		else:
-# 			#if the name doesn't exist yet, figure out where to put it
-# 			sorted_people = insertIntoSortedList(sorted_people, person)
-
-# 	# returning the results to their original format
-# 	return format_sort_results(sorted_people)
-
-# # https://stackoverflow.com/questions/26135900/inserting-an-element-into-an-array-in-sorted-order
-# def insertIntoSortedList(arr, int k, int start, int end) {
-#             if (k == 0)
-#                 return 0;
-
-#             int mid = (start + end) / 2;
-
-#             if (k > arr[mid] && k < arr[mid + 1])
-#                 return mid + 1;
-
-#             if (arr[mid] < k)
-#                 return findIndexToBeInserted(arr, k, mid + 1, end);
-
-#             return findIndexToBeInserted(arr, k, start, mid - 1);
-#         }
-#     }
-
-
-# with open('ep_4_people.json') as json_file:
-# 	people_json = json.load(json_file)
-# 	people = sort_people(people_json)
-# 		#find out if name exists. 
-# 			# If name does not exist, insert it (quick sort?)
-# 			# else
-# 				# Check if this age exists
-# 					#If not, insert it (quick sort?)
-# 					#if it does, append it to the end
-		
-# 	return people
