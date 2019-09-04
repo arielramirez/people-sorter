@@ -9,6 +9,8 @@ import json
 import collections
 from classes.quick_sort import QuickSort
 
+TEST_FILENAME = 'test_people.json'
+
 # standardizes the data in preparation for sorting
 def transform_to_sort_dimensions(raw_people):
 	#desired shape of data
@@ -60,6 +62,7 @@ def sort_people(raw_people):
 
 	# create list of people indexed by name, then indexed by age (see function for format)
 	unsorted_people = transform_to_sort_dimensions(raw_people)
+	print(unsorted_people)
 
 	# sort by name, sorts asc by default
 	sorted_names_list = quickSortList(list(unsorted_people.keys()))
@@ -72,15 +75,20 @@ def sort_people(raw_people):
 
 	for name in sorted_names_list:
 	    # get the sorted ages in desc order within a given name
-		sorted_ages_list = quickSortList(list(unsorted_people[name].keys()), lambda a,b: a < b)
+		sorted_ages_list = quickSortList(list(unsorted_people[name].keys()), lambda a,b: a > b)
+		sorted_people[name] = {}
 		for age in sorted_ages_list:
-			# storing everything in sorted order - for matches, the order is reverse of the original list
-			sorted_people[name][age] = unsorted_people[name][age].reverse()
+			# storing everything in sorted order by name and age
+			sorted_people[name][age] = unsorted_people[name][age]
+			# reversing original order of SSNs given
+			sorted_people[name][age].reverse()
+
 
 	# returning the results to their original format (totally optional)
+	print(sorted_people)
 	return format_sort_results(sorted_people)
 
-with open('ep_4_people.json') as json_file:
+with open(TEST_FILENAME) as json_file:
 	people_json = json.load(json_file)
 	sort_people(people_json)
 

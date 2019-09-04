@@ -1,5 +1,5 @@
 class QuickSort:
-    sort_function = lambda a, b: a <= b
+    sort_function = lambda self, a, b: a <= b # sorts asc by default
     
     # based on psuedocode in https://www.geeksforgeeks.org/python-program-for-quicksort/
     def sort(self, list_to_sort, low, high):
@@ -7,6 +7,7 @@ class QuickSort:
             pi = self.partition(list_to_sort, low, high)
             self.sort(list_to_sort, low, pi-1)
             self.sort(list_to_sort, pi+1, high)
+        return list_to_sort
 
     def partition(self, to_sort, low, high):
         i = low - 1
