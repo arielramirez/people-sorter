@@ -7,15 +7,27 @@
 # (When we say “list” you can interpret it as array, list, collection, etc.)
 import json
 import collections
+import argparse
+import sys
+import pprint
 from classes.quick_sort import QuickSort
 
-#remaining:
-# add ability to specify test filename in command line
-# add execution instructions to readme
-# add more testing data
-# clean up code
-
 TEST_FILENAME = 'test_people.json'
+
+def sort_people_from_file():
+
+	# option to select file from command line
+	parser = argparse.ArgumentParser()
+	parser.add_argument('--filename', help="Select a file of people for sorting")
+	args = parser.parse_args()
+	filename = args.filename or TEST_FILENAME
+
+	# read file, sort it and print the sorted data
+	with open(filename) as json_file:
+		people_json = json.load(json_file)
+		sorted_people = sort_people(people_json)
+		print("Sorted people in %s:"  % filename)
+		pprint.pprint(sorted_people)
 
 # standardizes the data in preparation for sorting
 def transform_to_sort_dimensions(raw_people):
@@ -41,6 +53,11 @@ def format_sort_results(sorted_people):
     # [ 
 	#    {
 	#	 	"ssn": "123-45-6789"
+	#	 	"name": "test",
+	#	 	"age": 100,
+	#    },
+	#   {
+	#	 	"ssn": "111-22-3333"
 	#	 	"name": "test",
 	#	 	"age": 100,
 	#    }
@@ -88,6 +105,6 @@ def sort_people(raw_people):
 	# returning the results to their original format (totally optional)
 	return format_sort_results(sorted_people)
 
-with open(TEST_FILENAME) as json_file:
-	people_json = json.load(json_file)
-	sort_people(people_json)
+# for readability to put primary code at beginning of file
+if __name__ == '__main__':
+	sort_people_from_file()
