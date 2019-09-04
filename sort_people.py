@@ -1,100 +1,88 @@
 # Task:
-#In the language of your choice, please write a function that takes in a list of unique people and returns a list of the people sorted. People have a name, age, and social security number. Their social security number is guaranteed to be unique. The people should be sorted by name (alphabetically) and age (oldest to youngest). When people have the same name and age, they should be sorted in reverse order of how they are in the original list. (When we say “list” you can interpret it as array, list, collection, etc.)
+# In the language of your choice, please write a function that takes in a list of unique people and returns a list of the people sorted.
+# People have a name, age, and social security number. Their social security number is guaranteed to be unique. 
+# The people should be sorted by name (alphabetically) and age (oldest to youngest). 
+# When people have the same name and age, they should be sorted in reverse order of how they are in the original list. 
+
+# (When we say “list” you can interpret it as array, list, collection, etc.)
 import json
 import collections
+from classes.quick_sort import QuickSort
 
-
-
-
-#input/output format
-# [ 
-	# {
-	# 	"ssn": "123-45-6789"
-	# 	"name": "test",
-	# 	"age": 100,
-
+# standardizes the data in preparation for sorting
+def transform_to_sort_dimensions(raw_people):
+	#desired shape of data
+	# {name: {
+	#	 	age: [ ssn, ssn ],
+	#	    age: [ ssn, ssn ]
+	#	 }
 	# }
-# ]
-
-# sorting format
-# {name: [
-# 	age: [ ssn, ssn ],
-#   age: [ ssn, ssn]
-# ]}
+	formatted = {}
+	for person in raw_people: 
+		if person['name'] not in formatted.keys():
+			formatted[person['name']] = { person['age']: [person['ssn']] }
+		elif person['age'] not in formatted[person['name']].keys():
+			formatted[person['name']][person['age']] = [ person['ssn'] ]
+		else:
+			formatted[person['name']][person['age']].append(person['ssn'])
+	return formatted
 
 # this returns the results to the i/o format after sorting
 def format_sort_results(sorted_people):
+	#input/output format
+    # [ 
+	#    {
+	#	 	"ssn": "123-45-6789"
+	#	 	"name": "test",
+	#	 	"age": 100,
+	#    }
+    # ]
 	# name dimension
 	formatted_people = []
 	for name, name_dim in sorted_people.items():
 		for age, ssn_arr in name_dim.items():
 			for ssn in (ssn_arr if isinstance(ssn_arr, list) else [ssn_arr]):
-				formatted_people.append({"name": name, "age": age, "ssn": ssn})
+				formatted_people.append({"ssn": ssn, "name": name, "age": age})
 	return formatted_people
 
-def sort_people_better(raw_people):
+# sorting helper function to keep primary script clean
+def quickSortList(unsorted_list, sort_function = None):
+	sorter = QuickSort()
+	if sort_function:
+		sorter.sort_function = sort_function
+	return sorter.sort(unsorted_list, 0, len(unsorted_list) - 1)
+
+# sorting implementation
+def sort_people(raw_people):
+	#ensure list is not empty
 	if not raw_people:
 		return []
 
-	# create list of people indexed by name, then indexed by age (see format above)
+	# create list of people indexed by name, then indexed by age (see function for format)
 	unsorted_people = transform_to_sort_dimensions(raw_people)
 
-	# sort by name
-	sorted_names = quickSortList(unsorted_people.keys())
+	# sort by name, sorts asc by default
+	sorted_names_list = quickSortList(list(unsorted_people.keys()))
 
-	# ensure the order is maintained
-	people_sorted_by_name = collections.OrderedDict()
+	print(sorted_names_list)
+	
 
-	# for each sorted name
-	for name in sorted_names:
-	    # get the sorted ages 
-		people_sorted_by_name[name] = quickSortList(unsorted_people['name'])
+	# ensure the final sort order is maintained
+	sorted_people = collections.OrderedDict()
 
-	# returning the results to their original format
-	return format_sort_results(people_sorted_by_name)
+	for name in sorted_names_list:
+	    # get the sorted ages in desc order within a given name
+		sorted_ages_list = quickSortList(list(unsorted_people[name].keys()), lambda a,b: a < b)
+		for age in sorted_ages_list:
+			# storing everything in sorted order - for matches, the order is reverse of the original list
+			sorted_people[name][age] = unsorted_people[name][age].reverse()
 
-# stub, uses quick sort to order the list
-def quickSortList(unsorted_list):
-	return quickSort(unsorted_list)
-
-# incomplete
-# based on psuedocode in https://www.geeksforgeeks.org/python-program-for-quicksort/
-def quickSort(people, low, high):
-	if (low < high):
-		partition(people, low, high)
-# incomplete
-
-
-# incomplete
-def partition(people, low, high):
-	i = low - 1
-	pivot = arr[high]
-# incomplete
-
-# standardizes the data in preparation for sorting
-def transform_to_sort_dimensions(raw_people):
-	#desired shape of data
-	# {name: [
-	#	 	age: [ ssn, ssn ],
-	#	    age: [ ssn, ssn ]
-	#	 ]
-	# }
-	formatted = {}
-	for person in raw_people: 
-		if person['name'] not in formatted.keys():
-			formatted[person['name']] = [ person['age']: [person['ssn']] ]
-		elif person['age'] not in formatted[person['name']].keys():
-			formatted[person['name']][person['age']]  = person['ssn']
-		else:
-			formatted[person['name']][person['age']].append(person['ssn'])
-	return formatted
-
+	# returning the results to their original format (totally optional)
+	return format_sort_results(sorted_people)
 
 with open('ep_4_people.json') as json_file:
 	people_json = json.load(json_file)
-	# sort_people(people_json)
-	sort_format = transform_to_sort_dimensions(people_json)
-	formatted_sort_results = format_sort_results(sort_format)
+	sort_people(people_json)
 
 
 
