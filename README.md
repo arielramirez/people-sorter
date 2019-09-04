@@ -1,8 +1,8 @@
 
 # People Sorter
 
-### Task
-In the language of your choice, please write a function that takes in a list of unique people and returns a list of the people sorted.
+### Goal
+Write a function that takes in a list of unique people and returns a list of the people sorted.
 People have a name, age, and social security number. Their social security number is guaranteed to be unique. 
 The people should be sorted by name (alphabetically) and age (oldest to youngest). 
 
