@@ -3,25 +3,75 @@
 		"ssn": "999-88-7777",
 		"name": "Obi Wan Kanbi",
 		"age": 45
- 	},
+	},
 	{
 		"ssn": "111-22-3333",
 		"name": "Obi Wan Kanbi",
-		"age": 45
- 	},
+		"age": 85
+	},
 	{
 		"ssn": "111-11-1111",
 		"name": "Obi Wan Kanbi",
 		"age": 115
- 	},
+	},
+	{
+		"ssn": "111-22-8569",
+		"name": "Han Solo",
+		"age": 25
+	},
 	{
 		"ssn": "123-45-6789",
 		"name": "Darth Vader",
 		"age": 45
-	 }, 
+	},
+	{
+		"ssn": "123-99-9999",
+		"name": "Darth Vader",
+		"age": 45
+	},
+	{
+		"ssn": "123-88-9999",
+		"name": "Darth Vader",
+		"age": 45
+	},
+	{
+		"ssn": "123-88-9999",
+		"name": "Darth Vader",
+		"age": 85
+	},
 	{
 		"ssn": "011-11-0010",
 		"name": "Luke Skywalker",
-		"age": "19"
-	 }
- ]
+		"age": 19
+	},
+	{
+		"ssn": "011-11-8888",
+		"name": "Luke Skywalker",
+		"age": 35
+	},
+	{
+		"ssn": "011-11-9999",
+		"name": "Luke Skywalker",
+		"age": 79
+	},
+	{
+		"ssn": "011-85-9999",
+		"name": "Han Solo",
+		"age": 51
+	},
+	{
+		"ssn": "444-55-666",
+		"name": "Leia Organa",
+		"age": 19
+	},
+	{
+		"ssn": "444-77-8888",
+		"name": "Leia Organa",
+		"age": 35
+	},
+	{
+		"ssn": "856-99-412",
+		"name": "Han Solo",
+		"age": 75
+	}
+]

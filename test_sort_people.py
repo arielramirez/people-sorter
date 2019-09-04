@@ -37,7 +37,7 @@ class TestPeopleSort(unittest.TestCase):
         for curr_person in sorted_people[1:]:
             if prev_person['name'] == curr_person['name'] and prev_person['age'] == curr_person['age']:
                 # ensures that the order in the sorted list matches the order in the original list
-                self.assertLess(get_index(orig_people, "ssn", prev_person['ssn']), get_index(orig_people, "ssn", curr_person['ssn']))
+                self.assertGreater(get_index(orig_people, "ssn", prev_person['ssn']), get_index(orig_people, "ssn", curr_person['ssn']))
 
     def test_data_integrity(self):
         orig_people = get_test_people()
