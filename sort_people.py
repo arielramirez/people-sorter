@@ -71,7 +71,7 @@ def format_sort_results(sorted_people):
 	return formatted_people
 
 # sorting helper function to keep primary script clean
-def quickSortList(unsorted_list, sort_function = None):
+def quick_sort_list(unsorted_list, sort_function = None):
 	sorter = QuickSort()
 	if sort_function:
 		sorter.sort_function = sort_function
@@ -87,14 +87,14 @@ def sort_people(raw_people):
 	unsorted_people = transform_to_sort_dimensions(raw_people)
 
 	# sort by name, sorts asc by default
-	sorted_names_list = quickSortList(list(set(unsorted_people.keys())))
+	sorted_names_list = quick_sort_list(list(set(unsorted_people.keys())))
 
 	# ensure the final sort order is maintained
 	sorted_people = collections.OrderedDict()
 
 	for name in sorted_names_list:
 	    # get the sorted ages in desc order within a given name
-		sorted_ages_list = quickSortList(list(set(unsorted_people[name].keys())), lambda a,b: a > b)
+		sorted_ages_list = quick_sort_list(list(set(unsorted_people[name].keys())), lambda a,b: a > b)
 		sorted_people[name] = {}
 		for age in sorted_ages_list:
 			# storing everything in sorted order by name and age
